@@ -166,10 +166,10 @@ This is like OG AMP(Atomic Multi-path Payment)[7] system.
 
 # References
 
-[1] https://bitcointalk.org/index.php?topic=321228
-[2] https://twitter.com/roasbeef/status/964608261830750208
-[3] https://eprint.iacr.org/2016/575
-[4] https://github.com/storm-org/storm-spec
-[5] https://twitter.com/joostjgr/status/1190714028626251779
-[6] https://github.com/lightningnetwork/lightning-rfc/pull/619
-[7] https://lists.linuxfoundation.org/pipermail/lightning-dev/2018-February/000993.html
+- [1] https://bitcointalk.org/index.php?topic=321228
+- [2] https://twitter.com/roasbeef/status/964608261830750208
+- [3] https://eprint.iacr.org/2016/575
+- [4] https://github.com/storm-org/storm-spec
+- [5] https://twitter.com/joostjgr/status/1190714028626251779
+- [6] https://github.com/lightningnetwork/lightning-rfc/pull/619
+- [7] https://lists.linuxfoundation.org/pipermail/lightning-dev/2018-February/000993.html
