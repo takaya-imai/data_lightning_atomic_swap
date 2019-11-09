@@ -71,20 +71,20 @@ As you know, preimage Payer gets can be a proof of payment because Payer can not
 
 Payer sends lightning payment and receives data from Payee atomically.
 
-`
-Payer                             Mediators                           Payee
-=================================================================================
-Payer Channel Pubkey <-----------------------------------------------> Payee Channel Pubkey
 
-                                                                       data(256bit, padded)
-                                                                       enc_key = (Payee Channel Secret Key * Payer Channel Pubkey).x  (256bit)
-enc_key = (Payer Channel Secret Key * Payee Channel Pubkey).x  (256bit)
-                                                                       enc_data = data XOR enc_key
-sha256(enc_data) <--------------------- invoice ---------------------- sha256(enc_data)
-sha256(enc_data) ----------------> sha256(enc_data) -----------------> sha256(enc_data)
-enc_data         <---------------- enc_data <------------------------- enc_data
-data = enc_data XOR enc_key
-`
+    Payer                             Mediators                           Payee
+    =================================================================================
+    Payer Channel Pubkey <-----------------------------------------------> Payee Channel Pubkey
+    
+                                                                           data(256bit, padded)
+                                                                           enc_key = (Payee Channel Secret Key * Payer Channel Pubkey).x  (256bit)
+    enc_key = (Payer Channel Secret Key * Payee Channel Pubkey).x  (256bit)
+                                                                           enc_data = data XOR enc_key
+    sha256(enc_data) <--------------------- invoice ---------------------- sha256(enc_data)
+    sha256(enc_data) ----------------> sha256(enc_data) -----------------> sha256(enc_data)
+    enc_data         <---------------- enc_data <------------------------- enc_data
+    data = enc_data XOR enc_key
+
 
 * The size of data is restricted to 256 bits. Identically, it should be extended to larger data and the data should be transferred in several payment paths like DLAS-up.
 * Channel Pubkey is only one for one channel and the data can be decrypted if enc_key is leaked. So enc_key should be generated newly every time by a way like hash chain but the protocol image above is just example for simplicity.
@@ -98,32 +98,32 @@ data = enc_data XOR enc_key
 Payer sends data and lightning payment from Payee atomically.
 This is like OG AMP(Atomic Multi-path Payment)[7] system.
 
-`
-Payer                             Mediators                            Payee
-=================================================================================
-data(512bit, padded)
 
-share1(256bit)
-share2(256bit)
+    Payer                             Mediators                            Payee
+    =================================================================================
+    data(512bit, padded)
+    
+    share1(256bit)
+    share2(256bit)
+    
+    base_s = share1 XOR share2
+    data1(256bit) ||  data2(256bit) = data(512bit)
+    XOR_d1 = data1 XOR base_s
+    XOR_d2 = data2 XOR base_s
+    PreImg1 = sha256(base_s || data || 1)
+    PreImg2 = sha256(base_s || data || 2)
+    
+    sha256(PreImg1), XOR_d1, share1 -> sha256(PreImg1), XOR_d1, share1  -> sha256(PreImg1), XOR_d1, share1
+    sha256(PreImg2), XOR_d2, share2 -> sha256(PreImg2), XOR_d2, share2  -> sha256(PreImg2), XOR_d2, share1
+    
+                                                                           base s = share1 XOR share2
+                                                                           data = (XOR_d1 XOR base_s) || (XOR_d2 XOR base_s)
+                                                                           PreImg1 = sha256(base_s || data || 1)
+                                                                           PreImg2 = sha256(base_s || data || 2)
+    
+    PreImg1    <-------------------    PreImg1    <---------------------   PreImg1
+    PreImg2    <-------------------    PreImg2    <---------------------   PreImg2
 
-base_s = share1 XOR share2
-data1(256bit) ||  data2(256bit) = data(512bit)
-XOR_d1 = data1 XOR base_s
-XOR_d2 = data2 XOR base_s
-PreImg1 = sha256(base_s || data || 1)
-PreImg2 = sha256(base_s || data || 2)
-
-sha256(PreImg1), XOR_d1, share1 -> sha256(PreImg1), XOR_d1, share1  -> sha256(PreImg1), XOR_d1, share1
-sha256(PreImg2), XOR_d2, share2 -> sha256(PreImg2), XOR_d2, share2  -> sha256(PreImg2), XOR_d2, share1
-
-                                                                       base s = share1 XOR share2
-                                                                       data = (XOR_d1 XOR base_s) || (XOR_d2 XOR base_s)
-                                                                       PreImg1 = sha256(base_s || data || 1)
-                                                                       PreImg2 = sha256(base_s || data || 2)
-
-PreImg1    <-------------------    PreImg1    <---------------------   PreImg1
-PreImg2    <-------------------    PreImg2    <---------------------   PreImg2
-`
 
 * This protocol example has 512 bits data and they are transferred in two paths. However, it can transfer larger data in several payment paths like [5].
 * || means string concatenation.
@@ -136,12 +136,12 @@ PreImg2    <-------------------    PreImg2    <---------------------   PreImg2
 
 1, Lightning Network ecosystem
 
-* Hosting Incentives like Acai Protocol
-** Watchtower Hosting incentive, Backup Hosting incentive
-*** Commitment tx data sending to Data Host(DLAS-up)
-**** Commitment tx data is embedded in preimage so that Payer can not send the data without remittance
-*** Channel backup data receiving from Data Host(DLAS-down)
-**** Channel backup data is embedded in preimage so that Payer can not receive the data without remittance
+- Hosting Incentives like Acai Protocol
+    - Watchtower Hosting incentive, Backup Hosting incentive
+        - Commitment tx data sending to Data Host(DLAS-up)
+            - Commitment tx data is embedded in preimage so that Payer can not send the data without remittance
+        - Channel backup data receiving from Data Host(DLAS-down)
+            - Channel backup data is embedded in preimage so that Payer can not receive the data without remittance
 
 2, Crypto currency Problems
 
