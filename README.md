@@ -3,11 +3,6 @@
 Data Lightning Atomic Swap (DLAS-down, DLAS-up)
 
 
-
-Someone already have the same idea?
-
-
-
 [Abstract]
 This proposal is a way to swap data and lightning payment atomically.
 It has two patterns, one is for a payer to swap data-download with lightning payment to a payee (DLAS-down), the other is for a payer to swap data-upload with lightning payment to a payee (DLAS-up).
