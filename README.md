@@ -22,17 +22,17 @@ Atomic lightning mechanism for data is useful in use cases below.
 
 [Pros & Cons]
 
-* DLAS-down
-** Pros
-*** Atomic data download exchange with lightning payment
-** Cons
-*** It needs better mechanism to expand data size
+- DLAS-down
+    - Pros
+        - Atomic data download exchange with lightning payment
+    -  Cons
+        - It needs better mechanism to expand data size
 
-* DLAS-up
-** Pros
-*** Atomic data upload exchange with lightning payment
-** Cons
-*** OG AMP[7] is needed to implement
+- DLAS-up
+    -  Pros
+        - Atomic data upload exchange with lightning payment
+    -  Cons
+        - OG AMP[7] is needed to implement
 
 
 [What I describe]
@@ -54,12 +54,14 @@ Just message as data is no problem because no need to check the message is corre
 
 Lightning Network(LN) has a mechanism about preimage like a brief image below. 
 
-Payer                             Mediators                            Payee
+`
+Payer                             Mediators                            Payee
 =================================================================================
                                                                         Preimage
 Preimage Hash  <--------------------- invoice ------------------------  Preimage Hash
 Preimage Hash  ---------------->   Preimage Hash -------------------->  Preimage Hash
-Preimage       <—-------------—-   Preimage      <--------------------  Preimage
+Preimage       <—-------------—-   Preimage      <--------------------  Preimage
+`
 
 As you know, preimage Payer gets can be a proof of payment because Payer can not get it if the payment is executed correctly.
 
@@ -70,8 +72,8 @@ As you know, preimage Payer gets can be a proof of payment because Payer can not
 
 Payer sends lightning payment and receives data from Payee atomically.
 
-
-Payer                             Mediators                            Payee
+`
+Payer                             Mediators                           Payee
 =================================================================================
 Payer Channel Pubkey <-----------------------------------------------> Payee Channel Pubkey
 
@@ -83,7 +85,7 @@ sha256(enc_data) <--------------------- invoice ---------------------- sha256(en
 sha256(enc_data) ----------------> sha256(enc_data) -----------------> sha256(enc_data)
 enc_data         <---------------- enc_data <------------------------- enc_data
 data = enc_data XOR enc_key
-
+`
 
 * The size of data is restricted to 256 bits. Identically, it should be extended to larger data and the data should be transferred in several payment paths like DLAS-up.
 * Channel Pubkey is only one for one channel and the data can be decrypted if enc_key is leaked. So enc_key should be generated newly every time by a way like hash chain but the protocol image above is just example for simplicity.
@@ -97,7 +99,8 @@ data = enc_data XOR enc_key
 Payer sends data and lightning payment from Payee atomically.
 This is like OG AMP(Atomic Multi-path Payment)[7] system.
 
-Payer                             Mediators                            Payee
+`
+Payer                             Mediators                            Payee
 =================================================================================
 data(512bit, padded)
 
@@ -121,7 +124,7 @@ sha256(PreImg2), XOR_d2, share2 -> sha256(PreImg2), XOR_d2, share2  -> sha256(Pr
 
 PreImg1    <-------------------    PreImg1    <---------------------   PreImg1
 PreImg2    <-------------------    PreImg2    <---------------------   PreImg2
-
+`
 
 * This protocol example has 512 bits data and they are transferred in two paths. However, it can transfer larger data in several payment paths like [5].
 * || means string concatenation.
