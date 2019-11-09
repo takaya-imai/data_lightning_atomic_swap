@@ -4,21 +4,21 @@ Data Lightning Atomic Swap (DLAS-down, DLAS-up)
 
 
 [Abstract]
+
 This proposal is a way to swap data and lightning payment atomically.
 It has two patterns, one is for a payer to swap data-download with lightning payment to a payee (DLAS-down), the other is for a payer to swap data-upload with lightning payment to a payee (DLAS-up).
 
 The data is embedded to preimage so sending and receiving the data need lightning payment at the same time.
 
----------
 
 [Motivation]
+
 Atomic Swaps among crypto currencies has various ways to implement (on-chain to on-chain[1], on-chain to of-chain(Submarine Swap[2])). And Atomic Swaps between data and crypto currencies are also proposed as a part of TumbleBit mechanism[3], Storm mechanism[4] and so on.
 
 Recently Joost Jager proposed Instant messages with lightning onion routing, whatsat[5], which use recent sphinx payload change[6]. This is very awesome but not atomic with lightning payment.
 
 Atomic lightning mechanism for data is useful in use cases below.
 
----------
 
 [Pros & Cons]
 
@@ -34,14 +34,14 @@ Atomic lightning mechanism for data is useful in use cases below.
 ** Cons
 *** OG AMP[7] is needed to implement
 
----------
 
 [What I describe]
+
 * A way to swap data with lightning payment atomically.
 
----------
 
 [What I do not describe]
+
 * A way to detect that data is correct or not, namely zero knowledge proof process.
 
 For example, probabilistic checkable proof like TumbleBit[3] proposed.
@@ -49,7 +49,6 @@ Just message as data is no problem because no need to check the message is corre
 
 * A way in case that different preimages are used in a payment route like Multi-hop locks.
 
----------
 
 [Specification]
 
@@ -129,7 +128,6 @@ PreImg2    <-------------------    PreImg2    <---------------------   PreImg2
 * If data is less than 512 bits, then 0x00 is padded(I am not sure which of big endian and little endian is better).
 
 
----------
 
 
 [Use Cases]
