@@ -54,14 +54,13 @@ Just message as data is no problem because no need to check the message is corre
 
 Lightning Network(LN) has a mechanism about preimage like a brief image below. 
 
-`
-Payer                             Mediators                            Payee
-=================================================================================
-                                                                        Preimage
-Preimage Hash  <--------------------- invoice ------------------------  Preimage Hash
-Preimage Hash  ---------------->   Preimage Hash -------------------->  Preimage Hash
-Preimage       <—-------------—-   Preimage      <--------------------  Preimage
-`
+
+    Payer                             Mediators                            Payee
+    =================================================================================
+                                                                            Preimage
+    Preimage Hash  <--------------------- invoice ------------------------  Preimage Hash
+    Preimage Hash  ---------------->   Preimage Hash -------------------->  Preimage Hash
+    Preimage       <—-------------—-   Preimage      <--------------------  Preimage
 
 As you know, preimage Payer gets can be a proof of payment because Payer can not get it if the payment is executed correctly.
 
