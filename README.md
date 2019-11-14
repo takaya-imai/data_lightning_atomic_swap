@@ -1,6 +1,4 @@
-# data_lightning_atomic_swap
-
-Data Lightning Atomic Swap (DLAS-down, DLAS-up)
+# Proposal: Data Lightning Atomic Swap (DLAS-down, DLAS-up)
 
 
 # Abstract
